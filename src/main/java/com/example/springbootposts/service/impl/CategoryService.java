@@ -6,10 +6,14 @@ import com.example.springbootposts.exception.BadRequestException;
 import com.example.springbootposts.repository.ICategoryRepository;
 import com.example.springbootposts.service.ICategoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
+@RequiredArgsConstructor
 public class CategoryService implements ICategoryService {
 
     @Autowired

@@ -3,8 +3,8 @@ package com.example.springbootposts.controller;
 import com.example.springbootposts.dto.CategoryDTO;
 import com.example.springbootposts.exception.BadRequestException;
 import com.example.springbootposts.service.ICategoryService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +16,16 @@ import java.util.Set;
 public class CategoryController {
 
     @Autowired
-    ICategoryService categoryService;
+    private ICategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) throws BadRequestException {
-        categoryService.createCategory(categoryDTO);
-        return ResponseEntity.ok(HttpStatus.OK);
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+        try {
+            categoryService.createCategory(categoryDTO);
+            return ResponseEntity.ok(HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping("/all")
@@ -40,9 +44,13 @@ public class CategoryController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) throws BadRequestException {
-        categoryService.updateCategory(categoryDTO);
-        return ResponseEntity.ok(HttpStatus.OK);
+    public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+        try {
+            categoryService.updateCategory(categoryDTO);
+            return ResponseEntity.ok(HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

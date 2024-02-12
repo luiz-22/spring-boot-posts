@@ -6,10 +6,9 @@ import lombok.*;
 
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table
 public class Category {
