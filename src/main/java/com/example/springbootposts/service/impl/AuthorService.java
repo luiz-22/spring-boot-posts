@@ -11,10 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
 public class AuthorService implements IAuthorService {
+
+    private static final Logger logger = Logger.getLogger(AuthorService.class.getName());
 
     @Autowired
     private IAuthorRepository authorRepository;
@@ -24,7 +27,18 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public void createAuthor(AuthorDTO authorDTO) throws BadRequestException {
-        Author newAuthor =mapper.convertValue(authorDTO, Author.class);
+        logger.info(authorDTO.getUsername());
+
+        if (authorDTO.getUsername() == null || authorDTO.getUsername().isEmpty()) {
+            throw new BadRequestException("Author name cannot be blank");
+        }
+
+        Optional<Author> existingAuthor = authorRepository.findByUsername(authorDTO.getUsername());
+        if (existingAuthor.isPresent()) {
+            throw new BadRequestException("Author already exists");
+        }
+
+        Author newAuthor = mapper.convertValue(authorDTO, Author.class);
         authorRepository.save(newAuthor);
     }
 

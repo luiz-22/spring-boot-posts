@@ -28,12 +28,12 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public Set<CategoryDTO> getCategories() {
         return categoryService.getCategories();
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getCategory(@PathVariable Long id) {
         try {
             CategoryDTO categoryDTO = categoryService.getCategory(id);

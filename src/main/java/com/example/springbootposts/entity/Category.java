@@ -1,7 +1,6 @@
 package com.example.springbootposts.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Set;
@@ -10,7 +9,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 public class Category {
 
     @Id
@@ -18,7 +17,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_generator")
     private Long id;
 
-    @NotBlank
+    @Column(nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "categories")

@@ -29,7 +29,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public Set<PostResponseDTO> getPosts() {
         return postService.getPosts();
     }

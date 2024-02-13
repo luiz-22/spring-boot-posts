@@ -25,9 +25,15 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void createCategory(CategoryDTO categoryDTO) throws BadRequestException {
+        Optional<Category> existingCategory = categoryRepository.findByName(categoryDTO.getName());
+        if (existingCategory.isPresent()) {
+            throw new BadRequestException("Category already exists");
+        }
+
         Category newCategory = mapper.convertValue(categoryDTO, Category.class);
         categoryRepository.save(newCategory);
     }
+
 
     @Override
     public Set<CategoryDTO> getCategories() {

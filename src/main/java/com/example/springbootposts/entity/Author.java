@@ -2,6 +2,7 @@ package com.example.springbootposts.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Set;
@@ -19,6 +20,7 @@ public class Author {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank
     private String username;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)

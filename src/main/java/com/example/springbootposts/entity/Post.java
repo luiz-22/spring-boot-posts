@@ -2,7 +2,6 @@ package com.example.springbootposts.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Set;
@@ -19,10 +18,10 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_generator")
     private Long id;
 
-    @NotBlank
+    @Column(nullable = false)
     private String title;
 
-    @NotBlank
+    @Column(nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,7 +29,7 @@ public class Post {
     @JsonIgnore
     private Author author;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "post_category",
             joinColumns = @JoinColumn(name = "post_id"),
